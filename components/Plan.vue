@@ -84,8 +84,9 @@ function absolutePosition(el) {
 }
 
 //TODO: Quote disegnate
-//TODO: Match excel
-//TODO: Mostra blocco sconosciuto
+//TODO: Stampa
+//TODO: Salva
+//TODO: Apri
 
 import h50Dataset from '~/combinazioni/h50.json';
 import _, { map } from 'underscore';
