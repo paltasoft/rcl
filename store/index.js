@@ -1,4 +1,5 @@
 export const state = () => ({
+    computeType: "h50",
     AllinL: 0,
     AllinZ: 0,
     Angolare: 0,
@@ -35,6 +36,9 @@ export const state = () => ({
         state.SquadrettaAncoraggio = 0;
         state.TiranteObliquo = 0;
         state.TiranteOrizzontale = 0
+    },
+    computeType(state, value) {
+        state.computeType = value
     },
     AllinL(state, value) {
         state.AllinL += value

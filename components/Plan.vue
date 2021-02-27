@@ -117,6 +117,9 @@ export default {
         this.loading = false;
     },
     computed: {
+        computeType () {
+            return this.$store.state.computeType
+        },
         cellGroup () {
             const perGroup = Math.ceil(this.cells.length / this.columns);
             return new Array(this.columns)
@@ -144,7 +147,9 @@ export default {
             this.cells[index].unkown = false;
             //this.computeRowQuotes(r, c);
             //this.computeColumnQuotes(r, c);
-            this.calcolaH50();
+            if(this.computeType === "h50") {
+                this.calcolaH50();
+            }
         },
         mouseoverCell (event, r, c) {
             if(event.buttons === 1) {
@@ -334,6 +339,13 @@ export default {
                     }
                 }
             })
+        }
+    },
+    watch: {
+        computeType (newVal, oldVal) {
+            if(newVal === "h50") {
+                this.calcolaH50();
+            }
         }
     }
 }

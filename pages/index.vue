@@ -6,6 +6,9 @@
     <v-col cols="12" sm="4" md="4">
       <v-row>
         <v-col cols="12">
+          <GlobalSelector />
+        </v-col>
+        <v-col cols="12">
           <Result />
         </v-col>
         <v-col cols="12">
