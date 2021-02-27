@@ -5,7 +5,7 @@
       app
     >
       <v-toolbar-title>
-        <img src="~/logo.png" style="height:60px;width:auto" />
+        <img src="~/assets/logo.png" style="height:60px;width:auto" />
       </v-toolbar-title>
       <v-spacer />
       <v-btn color="warning" @click="reload">
