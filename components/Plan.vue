@@ -35,8 +35,9 @@
     border-collapse: collapse; 
 }
 .cell {
-  border: 1px solid lightgray;
-  background-color: rgba(252,232,181, 0);
+    text-align: center;
+    border: 1px solid lightgray;
+    background-color: rgba(252,232,181, 0);
 }
 
 .cell-selected {
