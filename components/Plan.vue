@@ -1,5 +1,6 @@
 <template>
 <div>
+    <div id="width-calculator" :style="`width:${cellWidth}%`"></div>
     <v-overlay :value="loading">
       <Loader />
     </v-overlay>
@@ -18,8 +19,8 @@
     </div>
     <table class="plan-table" ref="planTable">
         <tr v-for="(r, rowIndex) in cellGroup" :key="rowIndex">
-            <td v-for="(c, columnIndex) in r" :key="columnIndex" :ref="`cell_${rowIndex}_${columnIndex}`"  :class="`cell ${cellClass(rowIndex, columnIndex)}`" @click="selectCell(rowIndex, columnIndex)" @mouseover="mouseoverCell($event, rowIndex, columnIndex)" :style="`width:${cellWidth}%;padding-bottom:${cellWidth}%`">
-                
+            <td v-for="(c, columnIndex) in r" :key="columnIndex" :ref="`cell_${rowIndex}_${columnIndex}`"  :class="`cell ${cellClass(rowIndex, columnIndex)}`" @click="selectCell(rowIndex, columnIndex)" @mouseover="mouseoverCell($event, rowIndex, columnIndex)" :style="`width:${cellWidth}%;height:${cellHeight}`">
+                <span v-if="computeType === 'skyline'">{{cellContent(rowIndex, columnIndex)}}</span>
             </td>
         </tr>
     </table>
@@ -89,6 +90,10 @@ function absolutePosition(el) {
 //TODO: Apri
 
 import h50Dataset from '~/combinazioni/h50.json';
+import h75Dataset from '~/combinazioni/h75.json';
+import h100Dataset from '~/combinazioni/h100.json';
+import skylineDataset from '~/combinazioni/skyline.json';
+
 import _, { map } from 'underscore';
 
 export default {
@@ -112,6 +117,8 @@ export default {
                     column: c,
                     selected: false,
                     unkown: false,
+                    h: null,
+                    quota: false
                 })
             }
         }
@@ -121,6 +128,9 @@ export default {
         computeType () {
             return this.$store.state.computeType
         },
+        skylineHeight () {
+            return this.$store.state.skylineHeight
+        },
         cellGroup () {
             const perGroup = Math.ceil(this.cells.length / this.columns);
             return new Array(this.columns)
@@ -129,6 +139,11 @@ export default {
         },
         cellWidth () {
             return 100 / this.columns;
+        },
+        cellHeight () {
+            var x = document.getElementById("width-calculator");
+            var style = window.getComputedStyle(x, null);
+            return style.width;
         }
     },
     methods: {
@@ -140,17 +155,34 @@ export default {
             if(this.cells[index].selected === true) {
                 return "cell-selected";
             }
+            if(this.cells[index].quota === true) {
+                return "cell-quote";
+            }
+            return "";
+        },
+        cellContent (r, c) {
+            var index = this.cells.findIndex(element => element.row === r && element.column === c);
+            if(this.cells[index].selected === true && this.computeType === 'skyline') {
+                return this.cells[index].h;
+            }
             return "";
         },
         selectCell (r, c) {
             var index = this.cells.findIndex(element => element.row === r && element.column === c);
             this.cells[index].selected = !this.cells[index].selected;
             this.cells[index].unkown = false;
-            //this.computeRowQuotes(r, c);
-            //this.computeColumnQuotes(r, c);
+            this.computeRowQuotes(r, c);
+            this.computeColumnQuotes(r, c);
             if(this.computeType === "h50") {
-                this.calcolaH50();
+                this.cells[index].h = 50;
+            } else if(this.computeType === "h75") {
+                this.cells[index].h = 75;
+            } else if(this.computeType === "h100") {
+                this.cells[index].h = 100;
+            } else if(this.computeType === "skyline") {
+                this.cells[index].h = this.skylineHeight;
             }
+            this.calcola();
         },
         mouseoverCell (event, r, c) {
             if(event.buttons === 1) {
@@ -221,7 +253,7 @@ export default {
                         columnStart: selectedColumnsGroup[0],
                         columnEnd: selectedColumnsGroup[selectedColumnsGroup.length - 1],
                         left: startingCellCoordinates.left,
-                        top: startingCellCoordinates.top - startingCellCoordinates.height * 1.5,
+                        top: startingCellCoordinates.top - startingCellCoordinates.height * 2.5,
                         width: startingCellCoordinates.width * selectedColumnsGroup.length,
                         height: startingCellCoordinates.height,
                         value: 0.5 * selectedColumnsGroup.length
@@ -255,7 +287,7 @@ export default {
                         rowEnd: selectedRowsGroup[selectedRowsGroup.length - 1],
                         columnStart: columnCellLine[0].column,
                         columnEnd: columnCellLine[columnCellLine.length - 1].column,
-                        left: startingCellCoordinates.left,
+                        left: startingCellCoordinates.left - startingCellCoordinates.width * 1.5,
                         top: startingCellCoordinates.top - startingCellCoordinates.height * 1.5,
                         width: startingCellCoordinates.width,
                         height: startingCellCoordinates.height * selectedRowsGroup.length,
@@ -274,50 +306,58 @@ export default {
                 }
             })
         },
-        getCellMapSquare (cell, h) {
-            const cellMap = [null, null, null, null, h, null, null, null, null];
+        getCellMapSquare (cell) {
+            const cellMap = [null, null, null, null, cell.h, null, null, null, null];
 
             const cellMap0 = this.cells.find(_ => _.row == cell.row - 1 && _.column == cell.column - 1);
             if(cellMap0 != undefined && cellMap0.selected === true) {
-                cellMap[0] = h;
+                cellMap[0] = cellMap0.h;
             }
             const cellMap1 = this.cells.find(_ => _.row == cell.row - 1 && _.column == cell.column);
             if(cellMap1 != undefined && cellMap1.selected === true) {
-                cellMap[1] = h;
+                cellMap[1] = cellMap1.h;
             }
             const cellMap2 = this.cells.find(_ => _.row == cell.row - 1 && _.column == cell.column + 1);
             if(cellMap2 != undefined && cellMap2.selected === true) {
-                cellMap[2] = h;
+                cellMap[2] = cellMap2.h;
             }
             const cellMap3 = this.cells.find(_ => _.row == cell.row && _.column == cell.column - 1);
             if(cellMap3 != undefined && cellMap3.selected === true) {
-                cellMap[3] = h;
+                cellMap[3] = cellMap3.h;
             }
             const cellMap5 = this.cells.find(_ => _.row == cell.row && _.column == cell.column + 1);
             if(cellMap5 != undefined && cellMap5.selected === true) {
-                cellMap[5] = h;
+                cellMap[5] = cellMap5.h;
             }
             const cellMap6 = this.cells.find(_ => _.row == cell.row + 1 && _.column == cell.column - 1);
             if(cellMap6 != undefined && cellMap6.selected === true) {
-                cellMap[6] = h;
+                cellMap[6] = cellMap6.h;
             }
             const cellMap7 = this.cells.find(_ => _.row == cell.row + 1 && _.column == cell.column);
             if(cellMap7 != undefined && cellMap7.selected === true) {
-                cellMap[7] = h;
+                cellMap[7] = cellMap7.h;
             }
             const cellMap8 = this.cells.find(_ => _.row == cell.row + 1 && _.column == cell.column + 1);
             if(cellMap8 != undefined && cellMap8.selected === true) {
-                cellMap[8] = h;
+                cellMap[8] = cellMap8.h;
             }
             return cellMap;
         },
-        calcolaH50 () {
+        calcola () {
             this.$store.commit("init");
             this.clearUnknown();
             this.cells.forEach(cell => {
                 if(cell.selected === true) {
-                    const cellMap = this.getCellMapSquare(cell, 50)
-                    const combinazione = h50Dataset.find(schema => _.isEqual(schema.Celle, cellMap));
+                    var cellMap = this.getCellMapSquare(cell);
+                    var combinazione = h50Dataset.find(schema => _.isEqual(schema.Celle, cellMap));
+                    if(this.computeType === "h50") {
+                    } else if(this.computeType === "h75") {
+                        combinazione = h75Dataset.find(schema => _.isEqual(schema.Celle, cellMap));
+                    } else if(this.computeType === "h100") {
+                        combinazione = h100Dataset.find(schema => _.isEqual(schema.Celle, cellMap));
+                    } else if(this.computeType === "skyline") {
+                        combinazione = skylineDataset.find(schema => _.isEqual(schema.Celle, cellMap));
+                    }
                     if(combinazione == undefined) {
                         cell.unkown = true;
                     } else {
@@ -344,9 +384,24 @@ export default {
     },
     watch: {
         computeType (newVal, oldVal) {
-            if(newVal === "h50") {
-                this.calcolaH50();
-            }
+            this.cells.forEach(cell => {
+                if(cell.selected === true) {
+                    if(newVal === "h50") {
+                        cell.h = 50;
+                    } else if(newVal === "h75") {
+                        cell.h = 75;
+                    } else if(newVal === "h100") {
+                        cell.h = 100;
+                    } else if(newVal === "skyline") {
+                        cell.selected = false;
+                        cell.unkown = false;
+                        cell.h = null;
+                        this.computeRowQuotes(cell.row, cell.column);
+                        this.computeColumnQuotes(cell.row, cell.column);
+                    }
+                }
+            });
+            this.calcola();
         }
     }
 }

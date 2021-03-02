@@ -1,5 +1,6 @@
 export const state = () => ({
     computeType: "h50",
+    skylineHeight: 50,
     AllinL: 0,
     AllinZ: 0,
     Angolare: 0,
@@ -40,6 +41,9 @@ export const state = () => ({
     computeType(state, value) {
         state.computeType = value
     },
+    skylineHeight(state, value) {
+        state.skylineHeight = value
+    },
     AllinL(state, value) {
         state.AllinL += value
     },
@@ -56,10 +60,12 @@ export const state = () => ({
         state.ElementoCrocera += value
     },
     GiuntoAlto(state, value) {
-        state.GiuntoAlto += value
+        state.GiuntoAlto += value / 2
+        state.GiuntoAlto = state.GiuntoAlto
     },
     GiuntoBasso(state, value) {
-        state.GiuntoBasso += value
+        state.GiuntoBasso += value / 2
+        state.GiuntoBasso = state.GiuntoBasso
     },
     Lastra25X50(state, value) {
         state.Lastra25X50 += value
@@ -74,7 +80,7 @@ export const state = () => ({
         state.PiastraL += value
     },
     PiastraLineare(state, value) {
-        state.PiastraLineare += value
+        state.PiastraLineare += value / 2
     },
     SpinottoCorto(state, value) {
         state.SpinottoCorto += value
@@ -86,7 +92,7 @@ export const state = () => ({
         state.TiranteObliquo += value
     },
     TiranteOrizzontale(state, value) {
-        state.TiranteOrizzontale += value
+        state.TiranteOrizzontale += value / 2
     }
   }
   
