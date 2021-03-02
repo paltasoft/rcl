@@ -16,6 +16,9 @@ export const state = () => ({
     SpinottoCorto: 0,
     SquadrettaAncoraggio: 0,
     TiranteObliquo: 0,
+    TiranteObliquoH50: 0,
+    TiranteObliquoH75: 0,
+    TiranteObliquoH100: 0,
     TiranteOrizzontale: 0
   })
   
@@ -90,6 +93,15 @@ export const state = () => ({
     },
     TiranteObliquo(state, value) {
         state.TiranteObliquo += value
+    },
+    TiranteObliquoH50(state, value) {
+        state.TiranteObliquoH50 += value
+    },
+    TiranteObliquoH75(state, value) {
+        state.TiranteObliquoH75 += value
+    },
+    TiranteObliquoH100(state, value) {
+        state.TiranteObliquoH100 += value
     },
     TiranteOrizzontale(state, value) {
         state.TiranteOrizzontale += value / 2
