@@ -153,7 +153,7 @@ export default {
                 id: "TiranteOrizzontale",
                 label: "Tir. Oriz.",
                 quantity: this.$store.state.TiranteOrizzontale,
-                unitPrice: 5
+                unitPrice: 5.9
             });
             return res;
         }
