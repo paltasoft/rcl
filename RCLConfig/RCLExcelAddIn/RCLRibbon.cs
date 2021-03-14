@@ -1,4 +1,4 @@
-﻿using Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Ribbon;
 using Newtonsoft.Json;
 using System;
@@ -184,8 +184,8 @@ namespace RCLExcelAddIn
             var combinazioni = new List<Combinazione>();
             while (leggiBlocco == true)
             {
-                var c1 = ws.UsedRange.Columns[2].Cells[2 + offset];
-                var c2 = ws.UsedRange.Columns[4].Cells[4 + offset];
+                var c1 = ws.UsedRange.Columns[0].Cells[2 + offset];
+                var c2 = ws.UsedRange.Columns[2].Cells[4 + offset];
                 var rigaAccessori = ws.UsedRange.Rows[3 + offset];
 
                 Range blocco = ws.UsedRange.Range[c1, c2];
@@ -222,7 +222,14 @@ namespace RCLExcelAddIn
                             combinazione.PiastraLineare = (int)rigaAccessori.Cells[19].Value;
                             combinazione.PiastraAngolare = (int)rigaAccessori.Cells[20].Value;
                             combinazione.PiastraL = (int)rigaAccessori.Cells[21].Value;
-                            combinazione.AllinZ = (int)rigaAccessori.Cells[22].Value;
+              if (string.IsNullOrEmpty(rigaAccessori.Cells[22].Value.ToString().Trim()))
+              {
+                combinazione.AllinZ = 0;
+              }
+              else
+              {
+                combinazione.AllinZ = (int)rigaAccessori.Cells[22].Value;
+              }
                             combinazione.AllinL = (int)rigaAccessori.Cells[23].Value;
                         }
                         else
