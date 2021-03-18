@@ -204,33 +204,34 @@ namespace RCLExcelAddIn
                 {
                     try
                     {
-                        if ((int?)rigaAccessori.Cells[6].Value != null)
+                        if ((int?)rigaAccessori.Cells[5].Value != null)
                         {
-                            combinazione.Lastra50X50 = (int)rigaAccessori.Cells[6].Value;
-                            combinazione.Lastra25X50 = (int)rigaAccessori.Cells[7].Value;
-                            combinazione.GiuntoAlto = (int)rigaAccessori.Cells[8].Value;
-                            combinazione.GiuntoBasso = (int)rigaAccessori.Cells[9].Value;
-                            combinazione.TiranteOrizzontale = (int)rigaAccessori.Cells[10].Value;
-                            combinazione.TiranteObliquoH50 = (int)rigaAccessori.Cells[11].Value;
-                            combinazione.TiranteObliquoH75 = (int)rigaAccessori.Cells[12].Value;
-                            combinazione.TiranteObliquoH100 = (int)rigaAccessori.Cells[13].Value;
-                            combinazione.Angolare = (int)rigaAccessori.Cells[14].Value;
-                            combinazione.SquadrettaAncoraggio = (int)rigaAccessori.Cells[15].Value;
-                            combinazione.ElementoCrocera = (int)rigaAccessori.Cells[16].Value;
-                            combinazione.Basamento = (int)rigaAccessori.Cells[17].Value;
-                            combinazione.SpinottoCorto = (int)rigaAccessori.Cells[18].Value;
-                            combinazione.PiastraLineare = (int)rigaAccessori.Cells[19].Value;
-                            combinazione.PiastraAngolare = (int)rigaAccessori.Cells[20].Value;
-                            combinazione.PiastraL = (int)rigaAccessori.Cells[21].Value;
-              if (string.IsNullOrEmpty(rigaAccessori.Cells[22].Value.ToString().Trim()))
-              {
-                combinazione.AllinZ = 0;
-              }
-              else
-              {
-                combinazione.AllinZ = (int)rigaAccessori.Cells[22].Value;
-              }
-                            combinazione.AllinL = (int)rigaAccessori.Cells[23].Value;
+                          combinazione.Lastra50X50 = (int)rigaAccessori.Cells[5].Value;
+                          combinazione.Lastra25X50 = (int)rigaAccessori.Cells[6].Value;
+                          combinazione.GiuntoAlto = (int)rigaAccessori.Cells[7].Value;
+                          combinazione.GiuntoBasso = (int)rigaAccessori.Cells[8].Value;
+                          combinazione.TiranteOrizzontale = (int)rigaAccessori.Cells[9].Value;
+                          combinazione.TiranteObliquoH50 = (int)rigaAccessori.Cells[10].Value;
+                          combinazione.TiranteObliquoH75 = (int)rigaAccessori.Cells[11].Value;
+                          combinazione.TiranteObliquoH100 = (int)rigaAccessori.Cells[12].Value;
+                          combinazione.Angolare = (int)rigaAccessori.Cells[13].Value;
+                          combinazione.SquadrettaAncoraggio = (int)rigaAccessori.Cells[14].Value;
+                          combinazione.ElementoCrocera = (int)rigaAccessori.Cells[15].Value;
+                          combinazione.Basamento = (int)rigaAccessori.Cells[16].Value;
+                          combinazione.SpinottoCorto = (int)rigaAccessori.Cells[17].Value;
+                          combinazione.PiastraLineare = (int)rigaAccessori.Cells[18].Value;
+                          combinazione.PiastraAngolare = (int)rigaAccessori.Cells[19].Value;
+                          combinazione.PiastraL = (int)rigaAccessori.Cells[20].Value;
+                          combinazione.AllinZ = (int)rigaAccessori.Cells[21].Value;
+                          try
+                          {
+                            combinazione.AllinL = (int)rigaAccessori.Cells[22].Value;
+                          }
+                          catch
+                          {
+                            combinazione.AllinL = 0;
+                          }
+                          
                         }
                         else
                         {
