@@ -20,7 +20,7 @@
     <table class="plan-table" ref="planTable">
         <tr v-for="(r, rowIndex) in cellGroup" :key="rowIndex">
             <td v-for="(c, columnIndex) in r" :key="columnIndex" :ref="`cell_${rowIndex}_${columnIndex}`"  :class="`cell ${cellClass(rowIndex, columnIndex)}`" @click="selectCell(rowIndex, columnIndex)" @mouseover="mouseoverCell($event, rowIndex, columnIndex)" :style="`width:${cellWidth}%;height:${cellHeight}`">
-                <span v-if="computeType === 'skyline'">{{cellContent(rowIndex, columnIndex)}}</span>
+                <span>{{cellContent(rowIndex, columnIndex)}}</span>
             </td>
         </tr>
     </table>
@@ -123,9 +123,6 @@ export default {
         this.loading = false;
     },
     computed: {
-        computeType () {
-            return this.$store.state.computeType
-        },
         skylineHeight () {
             return this.$store.state.skylineHeight
         },
@@ -160,26 +157,19 @@ export default {
         },
         cellContent (r, c) {
             var index = this.cells.findIndex(element => element.row === r && element.column === c);
-            if(this.cells[index].selected === true && this.computeType === 'skyline') {
-                return this.cells[index].h;
-            }
-            return "";
+            return this.cells[index].h;
         },
         selectCell (r, c) {
             var index = this.cells.findIndex(element => element.row === r && element.column === c);
             this.cells[index].selected = !this.cells[index].selected;
+            if(this.cells[index].selected == true) {
+                this.cells[index].h = this.skylineHeight;
+            } else {
+                this.cells[index].h = null;
+            }
             this.cells[index].unkown = false;
             this.computeRowQuotes(r, c);
             this.computeColumnQuotes(r, c);
-            if(this.computeType === "h50") {
-                this.cells[index].h = 50;
-            } else if(this.computeType === "h75") {
-                this.cells[index].h = 75;
-            } else if(this.computeType === "h100") {
-                this.cells[index].h = 100;
-            } else if(this.computeType === "skyline") {
-                this.cells[index].h = this.skylineHeight;
-            }
             this.calcola();
         },
         mouseoverCell (event, r, c) {
@@ -345,15 +335,14 @@ export default {
             this.$store.commit("init");
             this.clearUnknown();
             var numberofL = 0;
-            const selectedHeight = Number(this.computeType.replace("h", ""));
-            const validL = [
-                [ null, selectedHeight, null, null, selectedHeight, selectedHeight, null, null, null],
-                [ null, null, null, null, selectedHeight, selectedHeight, null, selectedHeight, null],
-                [ null, null, null, selectedHeight, selectedHeight, null, null, selectedHeight, null],
-                [ null, selectedHeight, null, selectedHeight, selectedHeight, null, null, null, null],
-            ]
             this.cells.forEach(cell => {
                 if(cell.selected === true) {
+                    const validL = [
+                        [ null, cell.h, null, null, cell.h, cell.h, null, null, null],
+                        [ null, null, null, null, cell.h, cell.h, null, cell.h, null],
+                        [ null, null, null, cell.h, cell.h, null, null, cell.h, null],
+                        [ null, cell.h, null, cell.h, cell.h, null, null, null, null],
+                    ];
                     var cellMap = this.getCellMapSquare(cell);
                     var combinazioneL = validL.find(schema => _.isEqual(schema, cellMap));
                     if(combinazioneL != undefined) {
@@ -387,28 +376,6 @@ export default {
                 this.$store.commit("SetSquadrettaAncoraggio", this.$store.state.SquadrettaAncoraggio - 2 * numberofL);
                 this.$store.commit("SetGiuntoBasso", this.$store.state.GiuntoBasso - 0.5 * numberofL);
             }
-        }
-    },
-    watch: {
-        computeType (newVal, oldVal) {
-            this.cells.forEach(cell => {
-                if(cell.selected === true) {
-                    if(newVal === "h50") {
-                        cell.h = 50;
-                    } else if(newVal === "h75") {
-                        cell.h = 75;
-                    } else if(newVal === "h100") {
-                        cell.h = 100;
-                    } else if(newVal === "skyline") {
-                        cell.selected = false;
-                        cell.unkown = false;
-                        cell.h = null;
-                        this.computeRowQuotes(cell.row, cell.column);
-                        this.computeColumnQuotes(cell.row, cell.column);
-                    }
-                }
-            });
-            this.calcola();
         }
     }
 }

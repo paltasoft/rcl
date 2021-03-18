@@ -8,35 +8,7 @@
     </v-card-title>
     <v-card-text> 
         <v-row>
-            <v-col cols=12>
-                <v-radio-group
-                    v-model="computeType"
-                    mandatory
-                    row
-                >
-                    <v-radio
-                        label="H50"
-                        value="h50"
-                    ></v-radio>
-                    <v-radio
-                        label="H75"
-                        value="h75"
-                    ></v-radio>
-                    <v-radio
-                        label="H100"
-                        value="h100"
-                    ></v-radio>
-                    <v-radio
-                        label="Skyline"
-                        value="skyline"
-                    ></v-radio>
-                </v-radio-group>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="4">
-            </v-col>
-            <v-col  v-if="computeType === 'skyline'" cols="8">
+            <v-col cols="12">
                 <v-btn-toggle
                     v-model="skylineValue"
                     mandatory
@@ -62,17 +34,6 @@ export default {
     data () {
         return {
             skylineValue: 0
-        }
-    },
-    computed: {
-        computeType: {
-            get() {
-                return this.$store.state.computeType
-            },
-            /* We add a setter */
-            set(value) {
-                this.$store.commit("computeType", value)
-            }
         }
     },
     watch: {
