@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     reload () {
-      location.href = "/"
+      location.reload();
     }
   }
 }
