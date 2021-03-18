@@ -90,10 +90,7 @@ function absolutePosition(el) {
 //TODO: Salva
 //TODO: Apri
 
-import h50Dataset from '~/combinazioni/h50.json';
-import h75Dataset from '~/combinazioni/h75.json';
-import h100Dataset from '~/combinazioni/h100.json';
-import skylineDataset from '~/combinazioni/skyline.json';
+import dataset from '~/combinazioni/combinazioni.json';
 
 import _, { map } from 'underscore';
 
@@ -347,18 +344,22 @@ export default {
         calcola () {
             this.$store.commit("init");
             this.clearUnknown();
+            var numberofL = 0;
+            const selectedHeight = Number(this.computeType.replace("h", ""));
+            const validL = [
+                [ null, selectedHeight, null, null, selectedHeight, selectedHeight, null, null, null],
+                [ null, null, null, null, selectedHeight, selectedHeight, null, selectedHeight, null],
+                [ null, null, null, selectedHeight, selectedHeight, null, null, selectedHeight, null],
+                [ null, selectedHeight, null, selectedHeight, selectedHeight, null, null, null, null],
+            ]
             this.cells.forEach(cell => {
                 if(cell.selected === true) {
                     var cellMap = this.getCellMapSquare(cell);
-                    var combinazione = h50Dataset.find(schema => _.isEqual(schema.Celle, cellMap));
-                    if(this.computeType === "h50") {
-                    } else if(this.computeType === "h75") {
-                        combinazione = h75Dataset.find(schema => _.isEqual(schema.Celle, cellMap));
-                    } else if(this.computeType === "h100") {
-                        combinazione = h100Dataset.find(schema => _.isEqual(schema.Celle, cellMap));
-                    } else if(this.computeType === "skyline") {
-                        combinazione = skylineDataset.find(schema => _.isEqual(schema.Celle, cellMap));
+                    var combinazioneL = validL.find(schema => _.isEqual(schema, cellMap));
+                    if(combinazioneL != undefined) {
+                        numberofL++;
                     }
+                    var combinazione = dataset.find(schema => _.isEqual(schema.Celle, cellMap));
                     if(combinazione == undefined) {
                         cell.unkown = true;
                     } else {
@@ -380,7 +381,12 @@ export default {
                         this.$store.commit("TiranteOrizzontale", combinazione.TiranteOrizzontale);
                     }
                 }
-            })
+            });
+            if(numberofL > 0) {
+                this.$store.commit("SetAngolare", this.$store.state.Angolare - 4 * numberofL);
+                this.$store.commit("SetSquadrettaAncoraggio", this.$store.state.SquadrettaAncoraggio - 2 * numberofL);
+                this.$store.commit("SetGiuntoBasso", this.$store.state.GiuntoBasso - 0.5 * numberofL);
+            }
         }
     },
     watch: {

@@ -56,6 +56,9 @@ export const state = () => ({
     Angolare(state, value) {
         state.Angolare += value
     },
+    SetAngolare(state, value) {
+        state.Angolare = value
+    },
     Basamento(state, value) {
         state.Basamento += value
     },
@@ -69,6 +72,9 @@ export const state = () => ({
     GiuntoBasso(state, value) {
         state.GiuntoBasso += value / 2
         state.GiuntoBasso = state.GiuntoBasso
+    },
+    SetGiuntoBasso(state, value) {
+        state.GiuntoBasso = value
     },
     Lastra25X50(state, value) {
         state.Lastra25X50 += value
@@ -90,6 +96,9 @@ export const state = () => ({
     },
     SquadrettaAncoraggio(state, value) {
         state.SquadrettaAncoraggio += value
+    },
+    SetSquadrettaAncoraggio(state, value) {
+        state.SquadrettaAncoraggio = value
     },
     TiranteObliquo(state, value) {
         state.TiranteObliquo += value
