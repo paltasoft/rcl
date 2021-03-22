@@ -7,7 +7,7 @@
         Risultato Elaborazione
     </v-card-title>
     <v-card-subtitle>
-        <span style="font-weight:bold">Prezzo Totale: {{ totalPrice }} €</span>
+        <span style="font-weight:bold">Prezzo Totale: {{ totalPrice.toFixed(2) }} €</span>
         <br/>
         <span style="font-weight:bold">Prezzo Totale (light): {{ (totalPrice + totalPrice * 0.03).toFixed(2) }} €</span>
     </v-card-subtitle>

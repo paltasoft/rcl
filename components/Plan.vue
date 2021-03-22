@@ -403,17 +403,39 @@ export default {
                     }
                 }
             });
+            //serpentello togliere 8 Angolare ogni 1
+
             if(numberofL > 0) {
                 this.$store.commit("SetAngolare", this.$store.state.Angolare - 4 * numberofL);
                 this.$store.commit("SetSquadrettaAncoraggio", this.$store.state.SquadrettaAncoraggio - 2 * numberofL);
                 this.$store.commit("SetGiuntoBasso", this.$store.state.GiuntoBasso - 0.5 * numberofL);
             }
-            if(numberofQ > 0) {
-                this.$store.commit("SetAngolare", this.$store.state.Angolare / 2);
-                this.$store.commit("SetElementoCrocera", this.$store.state.ElementoCrocera / 4);
-                this.$store.commit("SetTiranteObliquoH50", this.$store.state.TiranteObliquoH50 / 2);
-                this.$store.commit("SetTiranteObliquoH75", this.$store.state.TiranteObliquoH75 / 2);
-                this.$store.commit("SetTiranteObliquoH100", this.$store.state.TiranteObliquoH100 / 2);
+            if(numberofQ > 0){
+                if(numberofQ % 4 === 0) {
+                    this.$store.commit("SetAngolare", this.$store.state.Angolare / 2);
+                    this.$store.commit("SetElementoCrocera", this.$store.state.ElementoCrocera / 4);
+                    this.$store.commit("SetTiranteObliquoH50", this.$store.state.TiranteObliquoH50 / 2);
+                    this.$store.commit("SetTiranteObliquoH75", this.$store.state.TiranteObliquoH75 / 2);
+                    this.$store.commit("SetTiranteObliquoH100", this.$store.state.TiranteObliquoH100 / 2);
+                } else if(numberofQ % 2 === 0) {
+                    this.$store.commit("SetElementoCrocera", this.$store.state.ElementoCrocera / 4);
+                    this.$store.commit("SetAngolare", this.$store.state.Angolare - 8 * numberofQ / 2);
+                    this.$store.commit("SetGiuntoBasso", this.$store.state.GiuntoBasso - 0.5 * numberofQ / 2);
+                    this.$store.commit("SetSquadrettaAncoraggio", this.$store.state.SquadrettaAncoraggio - 2 * numberofQ / 2);
+                    if(this.$store.state.TiranteObliquoH50 > 0) {
+                        this.$store.commit("SetTiranteObliquoH50", this.$store.state.TiranteObliquoH50 - 4 * numberofQ / 2);
+                    }
+                    if(this.$store.state.TiranteObliquoH75 > 0) {
+                        this.$store.commit("SetTiranteObliquoH75", this.$store.state.TiranteObliquoH75 - 4 * numberofQ / 2);
+                    }
+                    if(this.$store.state.TiranteObliquoH100 > 0) {
+                        this.$store.commit("SetTiranteObliquoH100", this.$store.state.TiranteObliquoH100 - 4 * numberofQ / 2);
+                    }
+                    this.$store.commit("SetTiranteOrizzontale", this.$store.state.TiranteOrizzontale - 0.5 * numberofQ / 2);
+                }
+            }
+            if(this.$store.state.TiranteOrizzontale % 1 !== 0) {
+                this.$store.commit("SetTiranteOrizzontale", this.$store.state.TiranteOrizzontale - 0.5);
             }
         }
     }

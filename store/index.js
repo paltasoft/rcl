@@ -71,11 +71,9 @@ export const state = () => ({
     },
     GiuntoAlto(state, value) {
         state.GiuntoAlto += value / 2
-        state.GiuntoAlto = state.GiuntoAlto
     },
     GiuntoBasso(state, value) {
         state.GiuntoBasso += value / 2
-        state.GiuntoBasso = state.GiuntoBasso
     },
     SetGiuntoBasso(state, value) {
         state.GiuntoBasso = value
@@ -124,6 +122,9 @@ export const state = () => ({
     },
     TiranteOrizzontale(state, value) {
         state.TiranteOrizzontale += value / 2
+    },
+    SetTiranteOrizzontale(state, value) {
+        state.TiranteOrizzontale = value
     }
   }
   

@@ -41,6 +41,7 @@
 export default {
     data () {
         return {
+            calcola: false,
             skylineValue: 0,
             useTrainer: false
         }

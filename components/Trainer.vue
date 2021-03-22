@@ -128,7 +128,7 @@ export default {
     props: ["combinazione", "show"],
     methods: {
         closeTrainer () {
-            this.$emit('closeTrainer');
+            this.$emit("closeTrainer");
         },
         genera () {
             this.combinazioneGenerata.Celle = this.combinazione;
@@ -152,13 +152,13 @@ export default {
             this.combinazioneGenerata.TiranteOrizzontale = this.combinazioneGenerata.TiranteOrizzontale * 1;
             dataset.push(this.combinazioneGenerata);
             
-            const blob = new Blob([JSON.stringify(dataset)], {type: 'application/json'})
-            const e = document.createEvent('MouseEvents'),
+            const blob = new Blob([JSON.stringify(dataset)], {type: "application/json"})
+            const e = document.createEvent("MouseEvents"),
             a = document.createElement('a');
             a.download = "combinazioni.json";
             a.href = window.URL.createObjectURL(blob);
-            a.dataset.downloadurl = ['application/json', a.download, a.href].join(':');
-            e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            a.dataset.downloadurl = ["application/json", a.download, a.href].join(':');
+            e.initEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
             a.dispatchEvent(e);
 
             this.closeTrainer();
