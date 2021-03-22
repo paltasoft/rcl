@@ -404,6 +404,7 @@ export default {
                 }
             });
             //serpentello togliere 8 Angolare ogni 1
+            //full 4 in più ogni 1 full
 
             if(numberofL > 0) {
                 this.$store.commit("SetAngolare", this.$store.state.Angolare - 4 * numberofL);
