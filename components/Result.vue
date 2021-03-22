@@ -126,12 +126,6 @@ export default {
                 unitPrice: 0.5
             });
             res.push({
-                id: "TiranteObliquo",
-                label: "Tir. Obliquo",
-                quantity: this.$store.state.TiranteObliquo,
-                unitPrice: 5.30
-            });
-            res.push({
                 id: "TiranteObliquoH50",
                 label: "Tir. Obl. H50",
                 quantity: this.$store.state.TiranteObliquoH50,

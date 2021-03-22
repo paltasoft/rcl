@@ -14,7 +14,6 @@ export const state = () => ({
     PiastraLineare: 0,
     SpinottoCorto: 0,
     SquadrettaAncoraggio: 0,
-    TiranteObliquo: 0,
     TiranteObliquoH50: 0,
     TiranteObliquoH75: 0,
     TiranteObliquoH100: 0,
@@ -37,7 +36,9 @@ export const state = () => ({
         state.PiastraLineare = 0;
         state.SpinottoCorto = 0;
         state.SquadrettaAncoraggio = 0;
-        state.TiranteObliquo = 0;
+        state.TiranteObliquoH50 = 0;
+        state.TiranteObliquoH75 = 0;
+        state.TiranteObliquoH100 = 0;
         state.TiranteOrizzontale = 0
     },
     skylineHeight(state, value) {
@@ -60,6 +61,9 @@ export const state = () => ({
     },
     ElementoCrocera(state, value) {
         state.ElementoCrocera += value
+    },
+    SetElementoCrocera(state, value) {
+        state.ElementoCrocera = value
     },
     GiuntoAlto(state, value) {
         state.GiuntoAlto += value / 2
@@ -96,17 +100,23 @@ export const state = () => ({
     SetSquadrettaAncoraggio(state, value) {
         state.SquadrettaAncoraggio = value
     },
-    TiranteObliquo(state, value) {
-        state.TiranteObliquo += value
-    },
     TiranteObliquoH50(state, value) {
         state.TiranteObliquoH50 += value
+    },
+    SetTiranteObliquoH50(state, value) {
+        state.TiranteObliquoH50 = value
     },
     TiranteObliquoH75(state, value) {
         state.TiranteObliquoH75 += value
     },
+    SetTiranteObliquoH75(state, value) {
+        state.TiranteObliquoH75 = value
+    },
     TiranteObliquoH100(state, value) {
         state.TiranteObliquoH100 += value
+    },
+    SetTiranteObliquoH100(state, value) {
+        state.TiranteObliquoH100 = value
     },
     TiranteOrizzontale(state, value) {
         state.TiranteOrizzontale += value / 2

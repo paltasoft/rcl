@@ -211,6 +211,7 @@ namespace RCLExcelAddIn
                           combinazione.GiuntoAlto = (int)rigaAccessori.Cells[7].Value;
                           combinazione.GiuntoBasso = (int)rigaAccessori.Cells[8].Value;
                           combinazione.TiranteOrizzontale = (int)rigaAccessori.Cells[9].Value;
+                          combinazione.TiranteOrizzontale = (int)rigaAccessori.Cells[9].Value;
                           combinazione.TiranteObliquoH50 = (int)rigaAccessori.Cells[10].Value;
                           combinazione.TiranteObliquoH75 = (int)rigaAccessori.Cells[11].Value;
                           combinazione.TiranteObliquoH100 = (int)rigaAccessori.Cells[12].Value;
@@ -222,7 +223,14 @@ namespace RCLExcelAddIn
                           combinazione.PiastraLineare = (int)rigaAccessori.Cells[18].Value;
                           combinazione.PiastraAngolare = (int)rigaAccessori.Cells[19].Value;
                           combinazione.PiastraL = (int)rigaAccessori.Cells[20].Value;
-                          combinazione.AllinZ = (int)rigaAccessori.Cells[21].Value;
+                          try
+                          {
+                            combinazione.AllinZ = (int)rigaAccessori.Cells[21].Value;
+                          }
+                          catch
+                          {
+                            combinazione.AllinZ = 0;
+                          }
                           try
                           {
                             combinazione.AllinL = (int)rigaAccessori.Cells[22].Value;

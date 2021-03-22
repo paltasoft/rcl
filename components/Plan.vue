@@ -335,6 +335,7 @@ export default {
             this.$store.commit("init");
             this.clearUnknown();
             var numberofL = 0;
+            var numberofQ = 0;
             this.cells.forEach(cell => {
                 if(cell.selected === true) {
                     const validL = [
@@ -343,10 +344,21 @@ export default {
                         [ null, null, null, cell.h, cell.h, null, null, cell.h, null],
                         [ null, cell.h, null, cell.h, cell.h, null, null, null, null],
                     ];
+                    const validQ = [
+                        [ cell.h, cell.h, null, cell.h, cell.h, null, null, null, null],
+                        [ null, cell.h, cell.h, null, cell.h, cell.h, null, null, null],
+                        [ null, null, null, null, cell.h, cell.h, null, cell.h, cell.h],
+                        [ null, null, null, cell.h, cell.h, null, cell.h, cell.h, null],
+                    ];
                     var cellMap = this.getCellMapSquare(cell);
                     var combinazioneL = validL.find(schema => _.isEqual(schema, cellMap));
+                    var combinazioneQ = validQ.find(schema => _.isEqual(schema, cellMap));
+                    console.log(combinazioneQ)
                     if(combinazioneL != undefined) {
                         numberofL++;
+                    }
+                    if(combinazioneQ != undefined) {
+                        numberofQ++;
                     }
                     var combinazione = dataset.find(schema => _.isEqual(schema.Celle, cellMap));
                     if(combinazione == undefined) {
@@ -366,7 +378,9 @@ export default {
                         this.$store.commit("PiastraLineare", combinazione.PiastraLineare);
                         this.$store.commit("SpinottoCorto", combinazione.SpinottoCorto);
                         this.$store.commit("SquadrettaAncoraggio", combinazione.SquadrettaAncoraggio);
-                        this.$store.commit("TiranteObliquo", combinazione.TiranteObliquo);
+                        this.$store.commit("TiranteObliquoH50", combinazione.TiranteObliquoH50);
+                        this.$store.commit("TiranteObliquoH75", combinazione.TiranteObliquoH75);
+                        this.$store.commit("TiranteObliquoH100", combinazione.TiranteObliquoH100);
                         this.$store.commit("TiranteOrizzontale", combinazione.TiranteOrizzontale);
                     }
                 }
@@ -375,6 +389,13 @@ export default {
                 this.$store.commit("SetAngolare", this.$store.state.Angolare - 4 * numberofL);
                 this.$store.commit("SetSquadrettaAncoraggio", this.$store.state.SquadrettaAncoraggio - 2 * numberofL);
                 this.$store.commit("SetGiuntoBasso", this.$store.state.GiuntoBasso - 0.5 * numberofL);
+            }
+            if(numberofQ > 0) {
+                this.$store.commit("SetAngolare", this.$store.state.Angolare / 2);
+                this.$store.commit("SetElementoCrocera", this.$store.state.ElementoCrocera / 4);
+                this.$store.commit("SetTiranteObliquoH50", this.$store.state.TiranteObliquoH50 / 2);
+                this.$store.commit("SetTiranteObliquoH75", this.$store.state.TiranteObliquoH75 / 2);
+                this.$store.commit("SetTiranteObliquoH100", this.$store.state.TiranteObliquoH100 / 2);
             }
         }
     }
