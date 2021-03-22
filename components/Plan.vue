@@ -24,6 +24,7 @@
             </td>
         </tr>
     </table>
+    <Trainer :show="dialog" :combinazione="combinazioneTrainer" />
 </div>
 </template>
 
@@ -98,6 +99,8 @@ export default {
     name: "PlanView",
     data () {
         return {
+            combinazioneTrainer: [],
+            dialog: false,
             loading: true,
             rows: 30,
             columns: 30,
@@ -161,16 +164,26 @@ export default {
         },
         selectCell (r, c) {
             var index = this.cells.findIndex(element => element.row === r && element.column === c);
-            this.cells[index].selected = !this.cells[index].selected;
-            if(this.cells[index].selected == true) {
-                this.cells[index].h = this.skylineHeight;
+            if(this.cells[index].unkown == true && this.$store.state.useTrainer == true) {
+                this.apriTrainer(r, c);
             } else {
-                this.cells[index].h = null;
+                this.cells[index].selected = !this.cells[index].selected;
+                if(this.cells[index].selected == true) {
+                    this.cells[index].h = this.skylineHeight;
+                } else {
+                    this.cells[index].h = null;
+                }
+
+                this.cells[index].unkown = false;
+                this.computeRowQuotes(r, c);
+                this.computeColumnQuotes(r, c);
+                this.calcola();
             }
-            this.cells[index].unkown = false;
-            this.computeRowQuotes(r, c);
-            this.computeColumnQuotes(r, c);
-            this.calcola();
+        },
+        apriTrainer (r, c) {
+            var index = this.cells.findIndex(element => element.row === r && element.column === c);
+            this.combinazioneTrainer = this.getCellMapSquare(this.cells[index]);
+            this.dialog = true;
         },
         mouseoverCell (event, r, c) {
             if(event.buttons === 1) {
@@ -353,7 +366,6 @@ export default {
                     var cellMap = this.getCellMapSquare(cell);
                     var combinazioneL = validL.find(schema => _.isEqual(schema, cellMap));
                     var combinazioneQ = validQ.find(schema => _.isEqual(schema, cellMap));
-                    console.log(combinazioneQ)
                     if(combinazioneL != undefined) {
                         numberofL++;
                     }

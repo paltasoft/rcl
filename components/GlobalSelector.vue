@@ -25,6 +25,14 @@
                 </v-btn-toggle>
             </v-col>
         </v-row>
+        <v-row>
+            <v-col>
+                <v-switch
+                    v-model="useTrainer"
+                    label="Trainer"
+                ></v-switch>
+            </v-col>
+        </v-row>
     </v-card-text>
   </v-card>
 </template>
@@ -33,7 +41,8 @@
 export default {
     data () {
         return {
-            skylineValue: 0
+            skylineValue: 0,
+            useTrainer: false
         }
     },
     watch: {
@@ -45,6 +54,9 @@ export default {
             } else if(newVal == 2) {
                 this.$store.commit("skylineHeight", 100)
             }
+        },
+        useTrainer (newVal, oldVal) {
+            this.$store.commit("useTrainer", newVal)
         }
     }
 }

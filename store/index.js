@@ -1,4 +1,5 @@
 export const state = () => ({
+    useTrainer: false,
     skylineHeight: 50,
     AllinL: 0,
     AllinZ: 0,
@@ -40,6 +41,9 @@ export const state = () => ({
         state.TiranteObliquoH75 = 0;
         state.TiranteObliquoH100 = 0;
         state.TiranteOrizzontale = 0
+    },
+    useTrainer(state, value) {
+        state.useTrainer = value
     },
     skylineHeight(state, value) {
         state.skylineHeight = value
