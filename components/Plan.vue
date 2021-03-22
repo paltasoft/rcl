@@ -24,7 +24,7 @@
             </td>
         </tr>
     </table>
-    <Trainer :show="dialog" :combinazione="combinazioneTrainer" />
+    <Trainer :show="dialog" :combinazione="combinazioneTrainer" v-on:closeTrainer="closeTrainer"/>
 </div>
 </template>
 
@@ -129,6 +129,9 @@ export default {
         skylineHeight () {
             return this.$store.state.skylineHeight
         },
+        useTrainer () {
+            return this.$store.state.useTrainer
+        },
         cellGroup () {
             const perGroup = Math.ceil(this.cells.length / this.columns);
             return new Array(this.columns)
@@ -164,7 +167,7 @@ export default {
         },
         selectCell (r, c) {
             var index = this.cells.findIndex(element => element.row === r && element.column === c);
-            if(this.cells[index].unkown == true && this.$store.state.useTrainer == true) {
+            if(this.useTrainer === true) {
                 this.apriTrainer(r, c);
             } else {
                 this.cells[index].selected = !this.cells[index].selected;
@@ -184,6 +187,9 @@ export default {
             var index = this.cells.findIndex(element => element.row === r && element.column === c);
             this.combinazioneTrainer = this.getCellMapSquare(this.cells[index]);
             this.dialog = true;
+        },
+        closeTrainer () {
+            this.dialog = false
         },
         mouseoverCell (event, r, c) {
             if(event.buttons === 1) {

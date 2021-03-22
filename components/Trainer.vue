@@ -87,7 +87,7 @@
           <v-btn
             color="secondary"
             text
-            @click="show = false"
+            @click="closeTrainer"
           >
             Annulla
           </v-btn>
@@ -127,6 +127,9 @@ export default {
     },
     props: ["combinazione", "show"],
     methods: {
+        closeTrainer () {
+            this.$emit('closeTrainer');
+        },
         genera () {
             this.combinazioneGenerata.Celle = this.combinazione;
             this.combinazioneGenerata.AllinL = this.combinazioneGenerata.AllinL * 1;
@@ -158,7 +161,7 @@ export default {
             e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
             a.dispatchEvent(e);
 
-            this.show = false;
+            this.closeTrainer();
         }
     }
 }
