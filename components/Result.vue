@@ -45,7 +45,7 @@ export default {
                 id: "AllinL",
                 label: "Allin L",
                 quantity: this.$store.state.AllinL,
-                unitPrice: 1.5
+                unitPrice: 1.6
             });
             res.push({
                 id: "AllinZ",
@@ -57,61 +57,61 @@ export default {
                 id: "Angolare",
                 label: "Angolare",
                 quantity: this.$store.state.Angolare,
-                unitPrice: 2.5
+                unitPrice: 2.7
             });
             res.push({
                 id: "Basamento",
                 label: "Basamento",
                 quantity: this.$store.state.Basamento,
-                unitPrice: 25.5
+                unitPrice: 26.5
             });
             res.push({
                 id: "ElementoCrocera",
                 label: "Crocera",
                 quantity: this.$store.state.ElementoCrocera,
-                unitPrice: 1.9
+                unitPrice: 2
             });
             res.push({
                 id: "GiuntoAlto",
                 label: "Giun. Alto",
                 quantity: this.$store.state.GiuntoAlto,
-                unitPrice: 1.4
+                unitPrice: 1.6
             });
             res.push({
                 id: "GiuntoBasso",
                 label: "Giun. Basso",
                 quantity: this.$store.state.GiuntoBasso,
-                unitPrice: 5
+                unitPrice: 5.3
             });
             res.push({
                 id: "Lastra25X50",
                 label: "Lastra 25X50",
                 quantity: this.$store.state.Lastra25X50,
-                unitPrice: 20
+                unitPrice: 21
             });
             res.push({
                 id: "Lastra50X50",
                 label: "Lastra 50X50",
                 quantity: this.$store.state.Lastra50X50,
-                unitPrice: 28
+                unitPrice: 29.5
             });
             res.push({
                 id: "PiastraAngolare",
                 label: "P. Angolare",
                 quantity: this.$store.state.PiastraAngolare,
-                unitPrice: 7.5
+                unitPrice: 7.9
             });
             res.push({
                 id: "PiastraL",
                 label: "Piastra L",
                 quantity: this.$store.state.PiastraL,
-                unitPrice: 6.5
+                unitPrice: 6.9
             });
             res.push({
                 id: "PiastraLineare",
                 label: "P. Lineare",
                 quantity: this.$store.state.PiastraLineare,
-                unitPrice: 6.5
+                unitPrice: 7.2
             });
             res.push({
                 id: "SpinottoCorto",
@@ -129,25 +129,25 @@ export default {
                 id: "TiranteObliquoH50",
                 label: "Tir. Obl. H50",
                 quantity: this.$store.state.TiranteObliquoH50,
-                unitPrice: 5.30
+                unitPrice: 5.60
             });
             res.push({
                 id: "TiranteObliquoH75",
                 label: "Tir. Obl. H75",
                 quantity: this.$store.state.TiranteObliquoH75,
-                unitPrice: 5.30
+                unitPrice: 6.50
             });
             res.push({
                 id: "TiranteObliquoH100",
                 label: "Tir. Obl. H100",
                 quantity: this.$store.state.TiranteObliquoH100,
-                unitPrice: 5.30
+                unitPrice: 8
             });
             res.push({
                 id: "TiranteOrizzontale",
                 label: "Tir. Oriz.",
                 quantity: this.$store.state.TiranteOrizzontale,
-                unitPrice: 5
+                unitPrice: 5.3
             });
             return res;
         }
