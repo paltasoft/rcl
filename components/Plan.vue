@@ -406,6 +406,9 @@ export default {
             //serpentello togliere 8 Angolare ogni 1
             //full 4 in più ogni 1 full
 
+            this.$store.commit("SetAllinL", this.$store.state.AllinL/2);
+            this.$store.commit("SetAllinZ", this.$store.state.AllinZ/2);
+
             if(numberofL > 0) {
                 this.$store.commit("SetAngolare", this.$store.state.Angolare - 4 * numberofL);
                 this.$store.commit("SetSquadrettaAncoraggio", this.$store.state.SquadrettaAncoraggio - 2 * numberofL);

@@ -54,6 +54,13 @@ export const state = () => ({
     AllinZ(state, value) {
         state.AllinZ += value
     },
+    SetAllinL(state, value) {
+        state.AllinL = value
+    },
+    
+    SetAllinZ(state, value) {
+        state.AllinZ = value
+    },
     Angolare(state, value) {
         state.Angolare += value
     },
