@@ -355,23 +355,29 @@ export default {
             this.clearUnknown();
             var numberofL = 0;
             var numberofQ = 0;
+            var singleH = true;
             this.cells.forEach(cell => {
                 if(cell.selected === true) {
                     const validL = [
-                        [ null, cell.h, null, null, cell.h, cell.h, null, null, null],
-                        [ null, null, null, null, cell.h, cell.h, null, cell.h, null],
-                        [ null, null, null, cell.h, cell.h, null, null, cell.h, null],
-                        [ null, cell.h, null, cell.h, cell.h, null, null, null, null],
+                        [ null, 1, null, null, 1, 1, null, null, null],
+                        [ null, null, null, null, 1, 1, null, 1, null],
+                        [ null, null, null, 1, 1, null, null, 1, null],
+                        [ null, 1, null, 1, 1, null, null, null, null],
                     ];
                     const validQ = [
-                        [ cell.h, cell.h, null, cell.h, cell.h, null, null, null, null],
-                        [ null, cell.h, cell.h, null, cell.h, cell.h, null, null, null],
-                        [ null, null, null, null, cell.h, cell.h, null, cell.h, cell.h],
-                        [ null, null, null, cell.h, cell.h, null, cell.h, cell.h, null],
+                        [ 1, 1, null, 1, 1, null, null, null, null],
+                        [ null, 1, 1, null, 1, 1, null, null, null],
+                        [ null, null, null, null, 1, 1, null, 1, 1],
+                        [ null, null, null, 1, 1, null, 1, 1, null],
                     ];
                     var cellMap = this.getCellMapSquare(cell);
-                    var combinazioneL = validL.find(schema => _.isEqual(schema, cellMap));
-                    var combinazioneQ = validQ.find(schema => _.isEqual(schema, cellMap));
+                    var cellMapNormalized = cellMap.map(x => x === null ? x : 1);
+                    const cellmapU = ([...new Set(cellMap)]).filter(x => x !== null);
+                    if(cellmapU.length > 1) {
+                        singleH = false;
+                    }
+                    var combinazioneL = validL.find(schema => _.isEqual(schema, cellMapNormalized));
+                    var combinazioneQ = validQ.find(schema => _.isEqual(schema, cellMapNormalized));
                     if(combinazioneL != undefined) {
                         numberofL++;
                     }
@@ -389,7 +395,15 @@ export default {
                         this.$store.commit("ElementoCrocera", combinazione.ElementoCrocera);
                         this.$store.commit("GiuntoAlto", combinazione.GiuntoAlto);
                         this.$store.commit("GiuntoBasso", combinazione.GiuntoBasso);
-                        this.$store.commit("Lastra25X50", combinazione.Lastra25X50);
+                        if(singleH === true) {
+                            this.$store.commit("Lastra25X50", combinazione.Lastra25X50);
+                        } else {
+                            if(cellMap.includes(75)) {
+                                this.$store.commit("Lastra25X50", combinazione.Lastra25X50-1);
+                            } else {
+                                this.$store.commit("Lastra25X50", combinazione.Lastra25X50);
+                            }
+                        }
                         this.$store.commit("Lastra50X50", combinazione.Lastra50X50);
                         this.$store.commit("PiastraAngolare", combinazione.PiastraAngolare);
                         this.$store.commit("PiastraL", combinazione.PiastraL);
@@ -440,6 +454,11 @@ export default {
             }
             if(this.$store.state.TiranteOrizzontale % 1 !== 0) {
                 this.$store.commit("SetTiranteOrizzontale", this.$store.state.TiranteOrizzontale - 0.5);
+            }
+            
+            if(singleH === false) { 
+                this.$store.commit("SetAngolare", this.$store.state.Angolare - (this.$store.state.Basamento - 1) * 4);
+                this.$store.commit("Lastra25X50", 1);
             }
         }
     }
