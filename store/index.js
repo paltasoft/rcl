@@ -97,6 +97,9 @@ export const state = () => ({
     PiastraL(state, value) {
         state.PiastraL += value
     },
+    SetPiastraL(state, value) {
+        state.PiastraL = value
+    },
     PiastraLineare(state, value) {
         state.PiastraLineare += value / 2
     },

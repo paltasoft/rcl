@@ -459,6 +459,7 @@ export default {
             if(singleH === false) { 
                 this.$store.commit("SetAngolare", this.$store.state.Angolare - (this.$store.state.Basamento - 1) * 4);
                 this.$store.commit("Lastra25X50", 1);
+                this.$store.commit("SetPiastraL", this.$store.state.PiastraL / 2);
             }
         }
     }
