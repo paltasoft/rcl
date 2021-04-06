@@ -417,8 +417,6 @@ export default {
                     }
                 }
             });
-            //serpentello togliere 8 Angolare ogni 1
-            //full 4 in più ogni 1 full
 
             this.$store.commit("SetAllinL", this.$store.state.AllinL/2);
             this.$store.commit("SetAllinZ", this.$store.state.AllinZ/2);
@@ -456,8 +454,7 @@ export default {
                 this.$store.commit("SetTiranteOrizzontale", this.$store.state.TiranteOrizzontale - 0.5);
             }
             
-            if(singleH === false) { 
-                this.$store.commit("SetAngolare", this.$store.state.Angolare - (this.$store.state.Basamento - 1) * 4);
+            if(singleH === false) {
                 this.$store.commit("Lastra25X50", 1);
                 this.$store.commit("SetPiastraL", this.$store.state.PiastraL / 2);
             }
