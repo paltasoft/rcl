@@ -222,7 +222,7 @@
     <ManifestKeyFile>RCLExcelAddIn_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>724CBB8776A324BB3EA65CF6D89C1126430B8CDB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>05A09DBE7806B0B54AEF7F4969F1358C7269C676</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
